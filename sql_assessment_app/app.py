@@ -37,7 +37,7 @@ QUESTIONS = [
     {
         "id":1, 
         "question":"Which shippers do we have?", 
-        "description": "Display all shipping companies available in the database. This helps identify all carriers used for order deliveries.",
+        "description": "Retrieve a list of all shipping companies (shippers) available in the database. This helps users identify every carrier that can be used for order deliveries, which is useful for logistics and supply chain analysis.",
         "tables": ["shippers"],
         "table_info": {
             "shippers": {
@@ -50,7 +50,7 @@ QUESTIONS = [
     {
         "id":2, 
         "question":"Certain fields from Categories", 
-        "description": "Extract specific information about product categories. Show the category name and its description to understand product groupings.",
+        "description": "Extract the name and description of each product category. This query helps users understand how products are grouped and categorized in the database, which is important for inventory management and reporting.",
         "tables": ["categories"],
         "table_info": {
             "categories": {
@@ -63,7 +63,7 @@ QUESTIONS = [
     {
         "id":3, 
         "question":"Sales Representatives", 
-        "description": "List all employees who work as Sales Representatives. Display their names and when they were hired to track the sales team.",
+        "description": "List all employees whose job title is 'Sales Representative'. Display their names and hire dates to track the composition and tenure of the sales team, which is useful for HR and sales management.",
         "tables": ["employees"],
         "table_info": {
             "employees": {
@@ -76,7 +76,7 @@ QUESTIONS = [
     {
         "id":4, 
         "question":"Sales Representatives in the United States", 
-        "description": "Filter sales representatives by country. Identify the US-based sales team for regional management purposes.",
+        "description": "Filter the list of sales representatives to show only those based in the United States. This helps regional managers focus on the US sales team for performance reviews or territory planning.",
         "tables": ["employees"],
         "table_info": {
             "employees": {
@@ -89,7 +89,7 @@ QUESTIONS = [
     {
         "id":5, 
         "question":"Orders placed by specific EmployeeID", 
-        "description": "Retrieve all orders handled by a particular employee (ID 5). Used to track individual sales performance and order history.",
+        "description": "Retrieve all orders that were handled by the employee with EmployeeID 5. This query is useful for tracking the sales performance and order history of a specific employee, such as for performance reviews or commission calculations.",
         "tables": ["orders"],
         "table_info": {
             "orders": {
@@ -102,7 +102,7 @@ QUESTIONS = [
     {
         "id":6, 
         "question":"Suppliers and ContactTitles", 
-        "description": "Find suppliers excluding Marketing Managers. Useful for identifying decision makers and procurement contacts at different supplier organizations.",
+        "description": "Find all suppliers, excluding those whose contact title is 'Marketing Manager'. This helps identify key decision makers and procurement contacts at supplier organizations, which is important for business-to-business communications.",
         "tables": ["suppliers"],
         "table_info": {
             "suppliers": {
@@ -115,7 +115,7 @@ QUESTIONS = [
     {
         "id":7, 
         "question":"Products with queso in ProductName", 
-        "description": "Search for products containing 'queso' in their name. Demonstrates pattern matching for product discovery and inventory management.",
+        "description": "Search for all products whose names contain the word 'queso'. This demonstrates the use of pattern matching (LIKE operator) for product discovery, which is useful for inventory management and marketing analysis.",
         "tables": ["products"],
         "table_info": {
             "products": {
@@ -128,7 +128,7 @@ QUESTIONS = [
     {
         "id":8, 
         "question":"Orders shipping to France or Belgium", 
-        "description": "Find orders going to specific European countries. Useful for regional shipping analysis and logistics planning.",
+        "description": "Find all orders that are being shipped to either France or Belgium. This query is useful for regional shipping analysis, logistics planning, and understanding demand in specific European markets.",
         "tables": ["orders"],
         "table_info": {
             "orders": {
@@ -141,7 +141,7 @@ QUESTIONS = [
     {
         "id":9, 
         "question":"Orders shipping to any country in Latin America", 
-        "description": "Filter orders by multiple countries using IN clause. Demonstrates grouping multiple conditions for regional analysis.",
+        "description": "Filter orders to show only those shipped to countries in Latin America (Brazil, Mexico, Argentina, Venezuela). Demonstrates the use of the IN clause for grouping multiple conditions, which is useful for regional sales and logistics analysis.",
         "tables": ["orders"],
         "table_info": {
             "orders": {
@@ -154,7 +154,7 @@ QUESTIONS = [
     {
         "id":10, 
         "question":"Employees, in order of age", 
-        "description": "Sort employees by birthdate to identify age demographics and workforce composition. Shows sorting in ascending order.",
+        "description": "Sort all employees by their birthdate in ascending order. This query helps identify the age demographics and workforce composition, which is useful for HR planning and diversity analysis.",
         "tables": ["employees"],
         "table_info": {
             "employees": {
@@ -167,7 +167,7 @@ QUESTIONS = [
     {
         "id":11, 
         "question":"Showing only the Date with a DateTime field", 
-        "description": "Extract just the date portion from a datetime field. Demonstrates data type casting and formatting for readability.",
+        "description": "Extract only the date portion from the birthdate field (which may include time). Demonstrates data type casting and formatting for improved readability in reports and user interfaces.",
         "tables": ["employees"],
         "table_info": {
             "employees": {
@@ -181,6 +181,7 @@ QUESTIONS = [
         "id":12, 
         "question":"Employees full name", 
         "description": "Concatenate first and last names to create a full name field. Demonstrates string concatenation for formatted output.",
+            "description": "Concatenate the first and last names of employees to create a full name field. This demonstrates string concatenation in SQL, which is useful for creating formatted output for reports and user interfaces.",
         "tables": ["employees"],
         "table_info": {
             "employees": {
@@ -194,6 +195,7 @@ QUESTIONS = [
         "id":13, 
         "question":"OrderDetails amount per line item", 
         "description": "Calculate the total price for each order line item by multiplying unit price and quantity. Shows mathematical operations in SQL.",
+            "description": "Calculate the total price for each order line item by multiplying the unit price by the quantity. This demonstrates mathematical operations in SQL and is useful for invoice generation and sales analysis.",
         "tables": ["orderdetails"],
         "table_info": {
             "orderdetails": {
@@ -207,6 +209,7 @@ QUESTIONS = [
         "id":14, 
         "question":"How many customers?", 
         "description": "Count the total number of unique customers in the database. A basic aggregation query to understand database size.",
+            "description": "Count the total number of unique customers in the database. This basic aggregation query helps users understand the size of the customer base, which is important for business growth analysis.",
         "tables": ["customers"],
         "table_info": {
             "customers": {
@@ -220,6 +223,7 @@ QUESTIONS = [
         "id":15, 
         "question":"When was the first order?", 
         "description": "Find the earliest order date in the system. Uses MIN() aggregate function for temporal analysis.",
+            "description": "Find the earliest order date in the system using the MIN() aggregate function. This is useful for understanding how long the business has been operating and for historical sales analysis.",
         "tables": ["orders"],
         "table_info": {
             "orders": {
@@ -233,6 +237,7 @@ QUESTIONS = [
         "id":16, 
         "question":"Countries where there are customers", 
         "description": "Get unique list of all countries with customers. Uses DISTINCT to eliminate duplicates.",
+            "description": "Get a unique list of all countries where there are customers. Uses the DISTINCT keyword to eliminate duplicates, which is useful for market expansion and international sales analysis.",
         "tables": ["customers"],
         "table_info": {
             "customers": {
@@ -246,6 +251,7 @@ QUESTIONS = [
         "id":17, 
         "question":"Contact titles for customers", 
         "description": "Count customers by contact title and rank them. Shows GROUP BY with aggregation and sorting.",
+            "description": "Count the number of customers for each contact title and rank them in descending order. This query uses GROUP BY with aggregation and sorting, which is useful for understanding customer roles and targeting communications.",
         "tables": ["customers"],
         "table_info": {
             "customers": {
@@ -259,6 +265,8 @@ QUESTIONS = [
         "id":18, 
         "question":"Products with associated supplier names", 
         "description": "Link products to their suppliers using INNER JOIN. Shows how to combine data from related tables.",
+            "description": "Link each product to its supplier using an INNER JOIN. This query shows how to combine data from related tables and is useful for supply chain management and vendor analysis.",
+            "description": "Connect orders with shipping companies to see which carrier was used for each order. Demonstrates JOIN with date formatting. Only orders with orderid less than 10300 are included, which may represent a sample of early orders or a subset for demonstration purposes. This filter should be adjusted or removed for real business analysis.",
         "tables": ["products", "suppliers"],
         "table_info": {
             "products": {"columns": ["productid (INT, PK)", "productname (VARCHAR)", "supplierid (INT, FK)"]},
@@ -270,7 +278,7 @@ QUESTIONS = [
     {
         "id":19, 
         "question":"Orders and the Shipper that was used", 
-        "description": "Connect orders with shipping companies to see which carrier was used. Demonstrates JOIN with date formatting.",
+        "description": "Connect orders with shipping companies to see which carrier was used for each order. Demonstrates JOIN with date formatting. Only orders with orderid less than 10300 are included to focus on a specific subset of the data, such as early orders or a sample for demonstration.",
         "tables": ["orders", "shippers"],
         "table_info": {
             "orders": {"columns": ["orderid (INT, PK)", "orderdate (DATE)", "shipvia (INT, FK)"]},
@@ -283,6 +291,7 @@ QUESTIONS = [
         "id":20, 
         "question":"Categories, and the total products in each category", 
         "description": "Count products per category and rank by frequency. Uses JOIN with GROUP BY and aggregation.",
+            "description": "Count the number of products in each category and rank categories by the number of products. This query uses JOIN with GROUP BY and aggregation, which is useful for inventory analysis and category management.",
         "tables": ["products", "categories"],
         "table_info": {
             "products": {"columns": ["productid (INT, PK)", "categoryid (INT, FK)"]},
@@ -295,6 +304,7 @@ QUESTIONS = [
         "id":21, 
         "question":"Total customers per country/city", 
         "description": "Analyze customer distribution by geography. Uses GROUP BY with multiple columns and sorting.",
+            "description": "Analyze the distribution of customers by city and country. Uses GROUP BY with multiple columns and sorting, which is useful for geographic market analysis and sales planning.",
         "tables": ["customers"],
         "table_info": {
             "customers": {
@@ -308,6 +318,7 @@ QUESTIONS = [
         "id":22, 
         "question":"Products that need reordering", 
         "description": "Identify low stock products where units in stock fall below reorder level. Critical for inventory management.",
+            "description": "Identify products where the number of units in stock is less than the reorder level. This is critical for inventory management, as it helps prevent stockouts and ensures timely reordering.",
         "tables": ["products"],
         "table_info": {
             "products": {
@@ -321,6 +332,7 @@ QUESTIONS = [
         "id":23, 
         "question":"Products that need reordering, continued", 
         "description": "Advanced inventory check considering both stock and on-order quantities. Only shows active products (not discontinued).",
+            "description": "Advanced inventory check: identify products where the sum of units in stock and units on order is less than or equal to the reorder level, and the product is not discontinued. This helps ensure only active products are considered for reordering.",
         "tables": ["products"],
         "table_info": {
             "products": {
@@ -334,6 +346,7 @@ QUESTIONS = [
         "id":24, 
         "question":"Customer list by region", 
         "description": "Sort customers with region handling. Uses CASE statement to prioritize customers with null regions.",
+            "description": "Sort customers by region, placing those with a region value first and those with NULL regions last. Uses a CASE statement to prioritize, which is useful for regional sales management and reporting.",
         "tables": ["customers"],
         "table_info": {
             "customers": {
@@ -347,6 +360,7 @@ QUESTIONS = [
         "id":25, 
         "question":"High freight charges", 
         "description": "Find top 3 countries with highest average shipping costs. Shows use of TOP clause and GROUP BY.",
+            "description": "Find the top 3 countries with the highest average shipping (freight) costs. Uses the TOP clause and GROUP BY, which is useful for identifying expensive shipping destinations and optimizing logistics.",
         "tables": ["orders"],
         "table_info": {
             "orders": {
@@ -360,6 +374,7 @@ QUESTIONS = [
         "id":26, 
         "question":"High freight charges - 2015", 
         "description": "Analyze shipping costs filtered by year. Demonstrates date filtering for temporal analysis.",
+            "description": "Analyze shipping (freight) costs for orders placed in the year 2015. Demonstrates date filtering for temporal analysis, which is useful for year-over-year cost comparisons.",
         "tables": ["orders"],
         "table_info": {
             "orders": {
@@ -373,6 +388,7 @@ QUESTIONS = [
         "id":27, 
         "question":"High freight charges with between", 
         "description": "Alternative approach using different date format. Shows flexibility in SQL date comparisons.",
+            "description": "Alternative approach to analyzing shipping costs for a specific year, using a different date format or method. Shows flexibility in SQL date comparisons for temporal analysis.",
         "tables": ["orders"],
         "table_info": {
             "orders": {
@@ -386,6 +402,7 @@ QUESTIONS = [
         "id":28, 
         "question":"High freight charges - last year", 
         "description": "Dynamic date filtering using DATEADD function. Calculates based on most recent order date.",
+            "description": "Analyze shipping costs for the last year relative to the most recent order date in the system. Uses the DATEADD function for dynamic date filtering, which is useful for rolling year analysis.",
         "tables": ["orders"],
         "table_info": {
             "orders": {
@@ -399,6 +416,7 @@ QUESTIONS = [
         "id":29, 
         "question":"Inventory list", 
         "description": "Create comprehensive inventory snapshot with employee and product information. Complex multi-table JOIN.",
+            "description": "Create a comprehensive inventory snapshot by joining orders, employees, order details, and products. This complex multi-table JOIN provides detailed information for inventory tracking and employee performance analysis.",
         "tables": ["orders", "employees", "orderdetails", "products"],
         "table_info": {
             "orders": {"columns": ["orderid (INT, PK)", "employeeid (INT, FK)"]},
@@ -413,6 +431,7 @@ QUESTIONS = [
         "id":30, 
         "question":"Customers with no orders", 
         "description": "Find inactive customers who have never placed orders. Uses LEFT JOIN to identify missing matches.",
+            "description": "Find customers who have never placed an order by using a LEFT JOIN to identify missing matches. This is useful for identifying inactive customers and targeting them for marketing or outreach.",
         "tables": ["customers", "orders"],
         "table_info": {
             "customers": {"columns": ["customerid (VARCHAR, PK)", "companyname (VARCHAR)"]},
@@ -425,6 +444,7 @@ QUESTIONS = [
         "id":31, 
         "question":"Customers with no orders for EmployeeID 4", 
         "description": "Find customers who haven't bought from a specific salesman. Shows conditional LEFT JOIN logic.",
+            "description": "Find customers who have not placed any orders with the employee whose EmployeeID is 4. Uses conditional LEFT JOIN logic, which is useful for analyzing sales coverage and identifying new business opportunities.",
         "tables": ["customers", "orders"],
         "table_info": {
             "customers": {"columns": ["customerid (VARCHAR, PK)", "companyname (VARCHAR)"]},
@@ -437,6 +457,7 @@ QUESTIONS = [
         "id":32, 
         "question":"High-value customers", 
         "description": "Identify individual high-value orders in 2016. Uses aggregation with HAVING clause and multiple table joins.",
+            "description": "Identify individual orders in 2016 where the total order amount exceeds 10,000. Uses aggregation with HAVING clause and multiple table joins, which is useful for high-value sales analysis and customer segmentation.",
         "tables": ["customers", "orders", "orderdetails"],
         "table_info": {
             "customers": {"columns": ["customerid (VARCHAR, PK)", "companyname (VARCHAR)"]},
@@ -450,6 +471,7 @@ QUESTIONS = [
         "id":33, 
         "question":"High-value customers - total orders", 
         "description": "Aggregate high-value customers' total spending in 2016. Shows how to sum across multiple orders.",
+            "description": "Aggregate the total spending of high-value customers in 2016 by summing across all their orders. Shows how to use GROUP BY and HAVING to identify top customers for loyalty programs or targeted marketing.",
         "tables": ["customers", "orders", "orderdetails"],
         "table_info": {
             "customers": {"columns": ["customerid (VARCHAR, PK)", "companyname (VARCHAR)"]},
@@ -463,6 +485,7 @@ QUESTIONS = [
         "id":34, 
         "question":"High-value customers - with discount", 
         "description": "Calculate actual revenue after applying discounts. Shows business logic with discount calculations.",
+            "description": "Calculate the actual revenue from each customer in 2016 after applying discounts. Shows business logic with discount calculations, which is important for accurate revenue reporting and profitability analysis.",
         "tables": ["customers", "orders", "orderdetails"],
         "table_info": {
             "customers": {"columns": ["customerid (VARCHAR, PK)", "companyname (VARCHAR)"]},
@@ -813,8 +836,8 @@ with col2:
             st.image(logo_path, width=100)
         else:
             st.warning("Logo not found. Please add 'We_logo.svg695283768.png' to the project directory.")
-    except:
-        pass
+    except Exception as e:
+        st.warning(f"Logo display error: {e}")
 
 st.markdown("---")
 
@@ -882,7 +905,7 @@ if st.session_state.admin_authenticated:
     if not os.path.exists("submissions"):
         os.makedirs("submissions")
     
-    # Read all submission files
+    # Read all submission files (full and partial)
     submission_files = [f for f in os.listdir("submissions") if f.endswith('.csv')]
     
     if submission_files:
@@ -895,6 +918,8 @@ if st.session_state.admin_authenticated:
         for file in submission_files:
             try:
                 df = pd.read_csv(f"submissions/{file}")
+                # Mark partial submissions
+                df['SubmissionType'] = 'Partial' if 'partial' in file else 'Full'
                 # Pad missing Qx_Answer columns with empty or default values
                 for col in answer_cols:
                     if col not in df.columns:
@@ -920,7 +945,7 @@ if st.session_state.admin_authenticated:
             combined_df_export = pd.concat(all_submissions_export, ignore_index=True)
             
             # Display submissions table
-            st.subheader("All Employee Submissions")
+            st.subheader("All Employee Submissions (Full and Partial)")
             st.dataframe(combined_df, use_container_width=True, hide_index=True)
             
             # Export options
@@ -1030,34 +1055,42 @@ st.subheader(f"Question {st.session_state.current_q + 1} of {len(st.session_stat
 q = st.session_state.shuffled_questions[st.session_state.current_q]
 st.markdown(f"**Question:** {q['question']}")
 
-# Display description and table information
+# Display description and table information (if available)
 with st.expander(" Question Details & Schema"):
-    st.markdown(f"**Description:** {q['description']}")
-    st.markdown("**Tables Involved:**")
-    for table_name, table_data in q['table_info'].items():
-        st.markdown(f"- **{table_name}**")
-        if isinstance(table_data, dict):
-            if 'columns' in table_data:
-                st.write(f"  Columns: {', '.join(table_data['columns'])}")
-            if 'sample' in table_data:
-                st.markdown("  **Sample Data:**")
-                # Parse and format sample data as table
-                sample_text = table_data['sample']
-                if ' ? ' in sample_text:
-                    # Handle transformations like casting
-                    parts = sample_text.split(' ? ')
-                    col1, col2 = st.columns(2)
-                    with col1:
-                        st.markdown("**Input:**")
-                        st.code(parts[0].strip())
-                    with col2:
-                        st.markdown("**Output:**")
-                        st.code(parts[1].strip())
-                elif ',' in sample_text and ':' in sample_text:
-                    # Parse key-value pairs into table format
-                    pairs = [p.strip() for p in sample_text.split(',')]
-                    table_data_rows = []
-                    for pair in pairs:
+    if 'description' in q:
+        st.markdown(f"**Description:** {q['description']}")
+    else:
+        st.markdown("**Description:** _(No description available for this question)_")
+    if 'table_info' in q:
+        st.markdown("**Tables Involved:**")
+        for table_name, table_data in q['table_info'].items():
+            st.markdown(f"- **{table_name}**")
+            if isinstance(table_data, dict):
+                if 'columns' in table_data:
+                    st.write(f"  Columns: {', '.join(table_data['columns'])}")
+                if 'sample' in table_data:
+                    st.markdown("  **Sample Data:**")
+                    # Parse and format sample data as table
+                    sample_text = table_data['sample']
+                    if ' ? ' in sample_text:
+                        # Handle transformations like casting
+                        parts = sample_text.split(' ? ')
+                        col1, col2 = st.columns(2)
+                        with col1:
+                            st.markdown("**Input:**")
+                            st.code(parts[0].strip())
+                        with col2:
+                            st.markdown("**Output:**")
+                            st.code(parts[1].strip())
+                    elif ',' in sample_text and ':' in sample_text:
+                        # Parse key-value pairs into table format
+                        pairs = [p.strip() for p in sample_text.split(',')]
+                        table_data_rows = []
+                        for pair in pairs:
+                            # ...existing code...
+                            pass
+    else:
+        st.markdown("**Tables Involved:** _(Not applicable for this question)_")
                         if ':' in pair:
                             key, value = pair.split(':', 1)
                             table_data_rows.append({"Column": key.strip(), "Value": value.strip()})
@@ -1115,6 +1148,13 @@ if q.get("type") == "mcq":
                     "is_correct": correct,
                     "type": "mcq"
                 })
+                # Auto-save answers after each submission
+                import pandas as pd
+                import os
+                user_email = st.session_state.get('student_email', 'unknown').replace('@', '_at_').replace('.', '_')
+                save_path = os.path.join(os.path.dirname(__file__), 'submissions', f"{user_email}_partial.csv")
+                df = pd.DataFrame(st.session_state.answers)
+                df.to_csv(save_path, index=False)
                 
                 # Show feedback
                 st.session_state.show_feedback = True
@@ -1176,6 +1216,13 @@ else:
                     "is_correct": correct,
                     "type": "sql"
                 })
+                # Auto-save answers after each submission
+                import pandas as pd
+                import os
+                user_email = st.session_state.get('student_email', 'unknown').replace('@', '_at_').replace('.', '_')
+                save_path = os.path.join(os.path.dirname(__file__), 'submissions', f"{user_email}_partial.csv")
+                df = pd.DataFrame(st.session_state.answers)
+                df.to_csv(save_path, index=False)
                 
                 # Show feedback
                 st.session_state.show_feedback = True
