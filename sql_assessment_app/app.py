@@ -30,6 +30,34 @@ def normalize_sql(sql):
 
     return sql
 
+
+def parse_sample_text(sample_text):
+    """Parse sample text into structured forms for rendering.
+
+    Supported formats:
+    - "input ? output" -> {'type': 'io', 'input': ..., 'output': ...}
+    - "k: v, k2: v2" -> {'type': 'kv', 'rows': [ {Column, Value}, ... ]}
+    - fallback -> {'type': 'text', 'text': sample_text}
+    """
+    if not isinstance(sample_text, str):
+        return {"type": "text", "text": str(sample_text)}
+
+    if ' ? ' in sample_text:
+        parts = sample_text.split(' ? ', 1)
+        return {"type": "io", "input": parts[0].strip(), "output": parts[1].strip()}
+
+    if ',' in sample_text and ':' in sample_text:
+        pairs = [p.strip() for p in sample_text.split(',')]
+        rows = []
+        for pair in pairs:
+            if ':' in pair:
+                k, v = pair.split(':', 1)
+                rows.append({"Column": k.strip(), "Value": v.strip()})
+        if rows:
+            return {"type": "kv", "rows": rows}
+
+    return {"type": "text", "text": sample_text}
+
 # ==========================
 # SQL Question Bank with Enhanced Information
 # ==========================
@@ -621,7 +649,8 @@ def get_shuffled_questions(user_name):
     random.seed(seed)
     
     # Select 20 SQL questions (balance by complexity)
-    sql_questions = list(QUESTIONS)
+    # Exclude questions with multiple JOINs to keep active set simpler
+    sql_questions = [q for q in QUESTIONS if q.get('solution') and q['solution'].lower().count('join') <= 1]
     random.shuffle(sql_questions)
     selected_sql = sql_questions[:20]
     
@@ -821,23 +850,6 @@ st.markdown("""
         }
     </style>
 """, unsafe_allow_html=True)
-
-# ==========================
-# UE Branding Header
-# ==========================
-col1, col2, col3 = st.columns([1, 2, 1])
-with col2:
-    # Display logo
-    try:
-        # Try to display logo, show placeholder if missing
-        import pathlib
-        logo_path = "We_logo.svg695283768.png"
-        if pathlib.Path(logo_path).exists():
-            st.image(logo_path, width=100)
-        else:
-            st.warning("Logo not found. Please add 'We_logo.svg695283768.png' to the project directory.")
-    except Exception as e:
-        st.warning(f"Logo display error: {e}")
 
 st.markdown("---")
 
@@ -1070,34 +1082,21 @@ with st.expander(" Question Details & Schema"):
                     st.write(f"  Columns: {', '.join(table_data['columns'])}")
                 if 'sample' in table_data:
                     st.markdown("  **Sample Data:**")
-                    # Parse and format sample data as table
-                    sample_text = table_data['sample']
-                    if ' ? ' in sample_text:
-                        # Handle transformations like casting
-                        parts = sample_text.split(' ? ')
+                    parsed = parse_sample_text(table_data['sample'])
+                    if parsed['type'] == 'io':
                         col1, col2 = st.columns(2)
                         with col1:
                             st.markdown("**Input:**")
-                            st.code(parts[0].strip())
+                            st.code(parsed['input'])
                         with col2:
                             st.markdown("**Output:**")
-                            st.code(parts[1].strip())
-                    elif ',' in sample_text and ':' in sample_text:
-                        # Parse key-value pairs into table format
-                        pairs = [p.strip() for p in sample_text.split(',')]
-                        table_data_rows = []
-                        for pair in pairs:
-                            if ':' in pair:
-                                key, value = pair.split(':', 1)
-                                table_data_rows.append({"Column": key.strip(), "Value": value.strip()})
-                        if table_data_rows:
-                            st.dataframe(table_data_rows, width='stretch', hide_index=True)
-                        else:
-                            st.write(f"  {sample_text}")
+                            st.code(parsed['output'])
+                    elif parsed['type'] == 'kv':
+                        st.dataframe(parsed['rows'], width='stretch', hide_index=True)
+                    else:
+                        st.write(f"  {parsed['text']}")
                 else:
                     st.markdown("**Tables Involved:** _(Not applicable for this question)_")
-                else:
-                    st.write(f"  {sample_text}")
             if 'relationship' in table_data:
                 st.write(f"  Relationship: {table_data['relationship']}")
     
@@ -1183,6 +1182,20 @@ if q.get("type") == "mcq":
             with st.expander("View correct answer"):
                 st.markdown(f"**Correct Answer(s):** {', '.join(q['correct_answers'])}")
                 st.markdown("**Your Answer(s):** " + st.session_state.answers[-1]['your_answer'])
+                if st.button("Edit Answer", key=f"edit_mcq_{st.session_state.current_q}"):
+                    # Remove stored answer for this question and reset option states
+                    for i in range(len(st.session_state.answers) - 1, -1, -1):
+                        if st.session_state.answers[i]["question_id"] == q["id"]:
+                            st.session_state.answers.pop(i)
+                            break
+                    # Reset option widgets for this question
+                    for option in q["options"]:
+                        key = f"option_{st.session_state.current_q}_{option}"
+                        if key in st.session_state:
+                            st.session_state[key] = False
+                    st.session_state.show_feedback = False
+                    st.session_state.feedback_message = ""
+                    st.rerun()
 else:
     # SQL Question
     user_sql = st.text_area(
@@ -1252,6 +1265,16 @@ else:
                 st.code(q["solution"], language="sql")
                 st.markdown("**Explanation:**")
                 st.write(f"Your answer: `{st.session_state.answers[-1]['your_answer']}`")
+                if st.button("Edit Answer", key=f"edit_sql_{st.session_state.current_q}"):
+                    # Restore last submitted SQL for re-editing and remove stored submission
+                    for i in range(len(st.session_state.answers) - 1, -1, -1):
+                        if st.session_state.answers[i]["question_id"] == q["id"]:
+                            st.session_state.user_sql_input = st.session_state.answers[i]["your_answer"]
+                            st.session_state.answers.pop(i)
+                            break
+                    st.session_state.show_feedback = False
+                    st.session_state.feedback_message = ""
+                    st.rerun()
 
 # Show results when all questions are completed
 if (st.session_state.current_q >= len(st.session_state.shuffled_questions) or 
