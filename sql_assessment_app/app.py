@@ -641,21 +641,25 @@ for question in POWERBI_QUESTIONS:
 def get_shuffled_questions(user_name):
     """
     Create a deterministic shuffled order of questions for a user.
-    - Returns 20 SQL questions + 20 PowerBI questions (40 total)
+    - Returns 20 SQL questions (beginner + intermediate only) + 20 PowerBI questions (beginner only)
     - Uses user's name as seed for consistent randomization
     """
     # Create a hash seed from the user's name
     seed = int(hashlib.md5(user_name.lower().encode()).hexdigest(), 16)
     random.seed(seed)
     
-    # Select 20 SQL questions (balance by complexity)
+    # Select 20 SQL questions: beginner (1) and intermediate (2) only, no advanced
     # Exclude questions with multiple JOINs to keep active set simpler
-    sql_questions = [q for q in QUESTIONS if q.get('solution') and q['solution'].lower().count('join') <= 1]
+    sql_questions = [
+        q for q in QUESTIONS 
+        if q.get('solution') and q['solution'].lower().count('join') <= 1 
+        and q.get('complexity', 1) in [1, 2]
+    ]
     random.shuffle(sql_questions)
     selected_sql = sql_questions[:20]
     
-    # Select 20 PowerBI questions (balance by complexity)
-    powerbi_questions = list(POWERBI_QUESTIONS)
+    # Select 20 PowerBI questions: beginner only (complexity 1)
+    powerbi_questions = [q for q in POWERBI_QUESTIONS if q.get('complexity', 1) == 1]
     random.shuffle(powerbi_questions)
     selected_powerbi = powerbi_questions[:20]
     
