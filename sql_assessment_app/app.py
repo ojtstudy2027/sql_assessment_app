@@ -1037,7 +1037,7 @@ if st.session_state.admin_authenticated:
 # Student Assessment Section (Only if not in Admin Mode)
 # ==========================
 st.markdown("<h2 style='color: #6B21A8; text-align: center;'>👨‍💼 Employee SQL Training Assessment</h2>", unsafe_allow_html=True)
-st.markdown("<p style='text-align: center; color: #757575;'>Complete 34 comprehensive SQL proficiency questions</p>", unsafe_allow_html=True)
+# Subheader removed per request (previously: "Complete 34 comprehensive SQL proficiency questions")
 st.divider()
 
 st.markdown("**👤 Employee Information** (Required)")
