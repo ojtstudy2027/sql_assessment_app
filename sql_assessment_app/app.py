@@ -918,11 +918,12 @@ if st.session_state.admin_authenticated:
     st.markdown("<h2 style='color: #6B21A8; text-align: center;'>📊 Employee Training Assessment Dashboard</h2>", unsafe_allow_html=True)
     
     # Create submissions folder if it doesn't exist
-    if not os.path.exists("submissions"):
-        os.makedirs("submissions")
+    submissions_dir = os.path.join(os.path.dirname(__file__), 'submissions')
+    if not os.path.exists(submissions_dir):
+        os.makedirs(submissions_dir)
     
     # Read all submission files
-    submission_files = [f for f in os.listdir("submissions") if f.endswith('.csv')]
+    submission_files = [f for f in os.listdir(submissions_dir) if f.endswith('.csv')]
     
     if submission_files:
         st.info(f"✅ Total employee submissions: {len(submission_files)}")
@@ -933,7 +934,7 @@ if st.session_state.admin_authenticated:
         
         for file in submission_files:
             try:
-                df = pd.read_csv(f"submissions/{file}")
+                df = pd.read_csv(os.path.join(submissions_dir, file))
                 
                 # Extract metadata
                 if len(df) > 0:
